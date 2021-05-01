@@ -26,9 +26,13 @@ function renderVotes() {
   });
   [...totals.entries()].forEach(([choice, votes]) => {
     const votesElement = document.querySelector(`#votes-${choice}`);
-    votesElement.textContent = `${votes}(${Math.round((votes / state.voters.size) * 100)}%)`;
+    const votesPercentage = Math.round((votes / state.voters.size) * 100);
+    votesElement.textContent = `${votes}(${votesPercentage}%)`;
+    const votesElementParent = votesElement.parentElement;
+    votesElementParent.setAttribute("style", `background: linear-gradient(90deg, rgba(42,157,143,1) ${votesPercentage}%, rgba(8,42,38,1) ${votesPercentage}%);`)
   });
 }
+
 
 client.on('message', (channel, tags, message) => {
   if (tags.badges && (tags.badges.broadcaster || tags.badges.moderator)) {
